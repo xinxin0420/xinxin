@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🐣 职场快乐小测 · 粉嫩四格阵</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #ffecf2 0%, #ffdbeb 100%);
+            font-family: 'Segoe UI', 'Quicksand', 'Poppins', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+            padding: 28px 20px 50px;
+            color: #7a4b5c;
+        }
+
+        .test-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #fffafd;
+            border-radius: 58px;
+            box-shadow: 0 25px 40px -12px rgba(245, 145, 175, 0.35), 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        /* 粉嫩头部 */
+        .cute-header {
+            text-align: center;
+            padding: 32px 24px 24px;
+            background: #fff1f7;
+            border-bottom: 3px dashed #ffb7cd;
+        }
+
+        .cute-header h1 {
+            font-size: 2rem;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #e68aa7, #f2a7c1);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .sub-cute {
+            background: #ffe4ef;
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #bc7a96;
+            margin-top: 12px;
+        }
+
+        .tiny-note {
+            font-size: 0.7rem;
+            color: #e2a1bc;
+            background: #fff1f7;
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 30px;
+            margin-top: 14px;
+        }
+
+        /* 题目区 */
+        .questions-panel {
+            padding: 28px 28px 10px;
+        }
+
+        .question-card {
+            background: #ffffff;
+            margin-bottom: 36px;
+            border-radius: 48px;
+            padding: 22px 24px;
+            box-shadow: 0 12px 22px -10px rgba(231, 148, 174, 0.2);
+            border: 1px solid #ffe0ec;
+            transition: 0.1s;
+        }
+
+        .q-head {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .q-num-badge {
+            background: #ffe1ed;
+            color: #ce6f92;
+            border-radius: 50px;
+            padding: 4px 14px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .q-text {
+            font-weight: 700;
+            font-size: 1.18rem;
+            color: #9b5f78;
+        }
+
+        /* 🎀 四个选项一排展示 (grid 自动适配) */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        /* 保证可爱卡片自适应，小屏幕时自动换行 */
+        @media (max-width: 780px) {
+            .options-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+
+        /* 圆润选项按钮 */
+        .opt-cute {
+            background: #fffafc;
+            border-radius: 100px;
+            padding: 12px 14px 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border: 1.5px solid #ffe2ef;
+            box-shadow: 0 2px 5px rgba(231, 128, 167, 0.08);
+            width: 100%;
+        }
+
+        .opt-cute:hover {
+            background: #fff3f9;
+            border-color: #f9aecb;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 16px -8px rgba(247, 140, 181, 0.25);
+        }
+
+        .opt-cute input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            background: #fff0f5;
+            border: 2px solid #f3afca;
+            border-radius: 50%;
+            margin: 0;
+            position: relative;
+            cursor: pointer;
+            transition: 0.1s linear;
+            flex-shrink: 0;
+        }
+
+        .opt-cute input[type="radio"]:checked {
+            background: #fbc4dc;
+            border-color: #e387ae;
+            box-shadow: 0 0 0 2px rgba(243, 144, 184, 0.3), inset 0 0 0 4px #fffef7;
+        }
+
+        .opt-label {
+            font-size: 0.86rem;
+            font-weight: 550;
+            color: #aa6f89;
+            letter-spacing: -0.2px;
+            line-height: 1.3;
+            flex: 1;
+        }
+
+        .opt-cute:has(input[type="radio"]:checked) {
+            background: #feeef7;
+            border-color: #eaaec9;
+            box-shadow: 0 8px 14px -10px #eaa1bf;
+        }
+
+        /* 底部按钮 */
+        .action-cute {
+            text-align: center;
+            padding: 8px 28px 40px;
+        }
+
+        .submit-cute {
+            background: #f5b0cb;
+            border: none;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: bold;
+            padding: 14px 32px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 6px 0 #bc7a96;
+            width: 70%;
+            max-width: 290px;
+            font-family: inherit;
+        }
+
+        .submit-cute:active {
+            transform: translateY(2px);
+            box-shadow: 0 3px 0 #bc7a96;
+        }
+
+        /* 结果区域 (无分数) */
+        .result-area {
+            margin: 12px 28px 32px;
+            background: #ffeef5;
+            border-radius: 48px;
+            padding: 28px 22px;
+            text-align: center;
+            border: 2px solid #ffcee2;
+        }
+
+        .result-emoji {
+            font-size: 3.5rem;
+        }
+
+        .result-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 8px 0 6px;
+            color: #c7658c;
+        }
+
+        .result-mood {
+            font-size: 1.5rem;
+            letter-spacing: 4px;
+            margin: 6px 0;
+        }
+
+        .advice-cute {
+            background: #ffffffdb;
+            border-radius: 36px;
+            padding: 16px 20px;
+            text-align: left;
+            border-left: 6px solid #f5a6c4;
+            margin-top: 16px;
+        }
+
+        .reset-btn {
+            background: #f5d9e6;
+            border: none;
+            font-size: 0.9rem;
+            padding: 9px 24px;
+            border-radius: 40px;
+            margin-top: 20px;
+            color: #b55d80;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .reset-btn:active {
+            transform: scale(0.96);
+        }
+
+        .warning-missing {
+            background: #fff0e0;
+            color: #da8569;
+            padding: 12px 20px;
+            border-radius: 60px;
+            margin: 0px 28px 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-align: center;
+            border: 1px solid #ffcdad;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            padding: 20px 20px 28px;
+            color: #e2a7be;
+        }
+    </style>
+</head>
+<body>
+<div class="test-wrapper" id="pinkTestApp">
+    <div class="cute-header">
+        <h1>
+            🧸 职场快乐小测 · 四格摸摸乐 🧸
+        </h1>
+        <div class="sub-cute">🌸 选项随机摇摇乐 · 一排四格舒舒服服 🌸</div>
+        <div class="tiny-note">💗 根据「过去一个月」真实感受，每次刷新选项顺序都不一样 💗</div>
+    </div>
+
+    <div class="questions-panel" id="questionsContainer"></div>
+
+    <div class="action-cute">
+        <button class="submit-cute" id="cuteSubmitBtn">✨ 揭晓我的专属状态 ✨</button>
+    </div>
+
+    <div id="resultBlock"></div>
+    <footer>🍰 职场只是生活的一部分，你的快乐才是头等大事 🍰<br>❤️ 用心感受自己的节奏，必要时可以找朋友或心理老师聊聊 ❤️</footer>
+</div>
+
+<script>
+    // ---------- 原始题库 (包含文本+分数，但分数不对外展示) ----------
+    const rawQuestions = [
+        {
+            text: "💤 周日晚上的心情小剧场？",
+            optionsRaw: [
+                { text: "🎈 像期待去游乐园一样小激动", score: 0 },
+                { text: "🍵 平平淡淡，和周末没啥区别", score: 1 },
+                { text: "🥛 有点不对劲，像喝了放久的牛奶", score: 2 },
+                { text: "💔 心律不齐，感觉明天要上刑场", score: 3 }
+            ]
+        },
+        {
+            text: "⏰ 周一闹钟响起的第一个念头？",
+            optionsRaw: [
+                { text: "✨ “美滋滋的一周开始啦！”", score: 0 },
+                { text: "🐣 “再眯五分钟...”然后乖乖起床", score: 1 },
+                { text: "😵 “能不能原地失忆忘记去公司？”", score: 2 },
+                { text: "✈️ “给老板发：世界那么大我想去看看”", score: 3 }
+            ]
+        },
+        {
+            text: "☕ 周一咖啡/奶茶续命指数？",
+            optionsRaw: [
+                { text: "🍃 不喝也清醒，精神小兔", score: 0 },
+                { text: "🥤 正常一杯，提神醒脑", score: 1 },
+                { text: "⚡ 两杯起跳，不然屏幕重影", score: 2 },
+                { text: "🌀 喝到手抖心慌，分不清是累还是咖啡因", score: 3 }
+            ]
+        },
+        {
+            text: "🧘 午休真实状态？",
+            optionsRaw: [
+                { text: "🌸 吃饱睡好，下午元气满满", score: 0 },
+                { text: "😴 能眯一会儿，勉强回血", score: 1 },
+                { text: "🌪️ 躺下脑子还在开会，睡了个寂寞", score: 2 },
+                { text: "❌ 完全睡不着，闭眼就是KPI和老板的脸", score: 3 }
+            ]
+        },
+        {
+            text: "🤝 同事聚餐/团建第一反应？",
+            optionsRaw: [
+                { text: "🍰 好耶干饭！又可以吃好吃的", score: 0 },
+                { text: "🙂 还行吧，不算抗拒", score: 1 },
+                { text: "😶 只想装死，内心在逃跑", score: 2 },
+                { text: "💼 宁愿加班也不想参加", score: 3 }
+            ]
+        },
+        {
+            text: "📱 看到工作消息（微信/钉钉）弹出来？",
+            optionsRaw: [
+                { text: "💖 好奇谁找我～", score: 0 },
+                { text: "✨ 应该不是大事，正常点开", score: 1 },
+                { text: "😰 心里咯噔：“不会出问题了吧”", score: 2 },
+                { text: "🚫 拒绝点开，脑补全是坏消息", score: 3 }
+            ]
+        },
+        {
+            text: "🌙 下班后/周末还在回想工作吗？",
+            optionsRaw: [
+                { text: "🍬 下班就失忆，生活是生活", score: 0 },
+                { text: "🍃 偶尔想到，但不影响心情", score: 1 },
+                { text: "🌧️ 经常想到有点烦躁", score: 2 },
+                { text: "📉 完全停不下来，做梦都是PPT", score: 3 }
+            ]
+        },
+        {
+            text: "💞 最近一个月的“职业倦怠”小雷达？",
+            optionsRaw: [
+                { text: "🌟 充满热情，还能爱工作五百年", score: 0 },
+                { text: "🍭 偶尔无聊但能忍", score: 1 },
+                { text: "🍂 看什么都烦，觉得工作没意义", score: 2 },
+                { text: "🪦 上班如上坟，对所有事情失去兴趣", score: 3 }
+            ]
+        }
+    ];
+
+    // 全局随机化之后的题目列表
+    let randomizedQuestions = [];
+    // 存储每个题目用户选择的分数 和 选项索引
+    let selectedScores = [];
+    let selectedOptionIndices = [];
+
+    // Fisher-Yates 随机打乱
+    function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    // 构建随机选项排序的题目数组
+    function buildRandomizedQuestions() {
+        const newQuestions = [];
+        for (let q of rawQuestions) {
+            const optsCopy = [...q.optionsRaw];
+            const shuffledOpts = shuffleArray(optsCopy);
+            newQuestions.push({
+                text: q.text,
+                options: shuffledOpts   // 每个元素 { text, score }
+            });
+        }
+        return newQuestions;
+    }
+
+    // 初始化数据（重置选中 + 重新随机选项）
+    function initData() {
+        randomizedQuestions = buildRandomizedQuestions();
+        selectedScores = new Array(randomizedQuestions.length).fill(null);
+        selectedOptionIndices = new Array(randomizedQuestions.length).fill(-1);
+    }
+
+    // 渲染题目（采用四列grid布局）
+    function renderQuestions() {
+        const container = document.getElementById('questionsContainer');
+        if (!container) return;
+        container.innerHTML = '';
+
+        for (let idx = 0; idx < randomizedQuestions.length; idx++) {
+            const q = randomizedQuestions[idx];
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.dataset.qid = idx;
+
+            const headDiv = document.createElement('div');
+            headDiv.className = 'q-head';
+            headDiv.innerHTML = `
+                <span class="q-num-badge">✨ 第${idx+1}题</span>
+                <span class="q-text">${q.text}</span>
+            `;
+
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options-grid';   // grid 负责排成四个一排
+
+            // 遍历该题目的四个选项（随机顺序）
+            q.options.forEach((opt, optIdx) => {
+                const optScore = opt.score;
+                const optText = opt.text;
+
+                const label = document.createElement('label');
+                label.className = 'opt-cute';
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `q_${idx}`;
+                radio.value = optScore;
+                radio.dataset.idx = idx;
+                radio.dataset.optIndex = optIdx;
+
+                if (selectedOptionIndices[idx] === optIdx) {
+                    radio.checked = true;
+                }
+
+                const span = document.createElement('span');
+                span.className = 'opt-label';
+                span.innerText = optText;
+
+                label.appendChild(radio);
+                label.appendChild(span);
+                optionsDiv.appendChild(label);
+
+                // 监听选中事件，存储分数和选项索引
+                radio.addEventListener('change', (e) => {
+                    if (radio.checked) {
+                        selectedScores[idx] = optScore;
+                        selectedOptionIndices[idx] = optIdx;
+                    }
+                });
+            });
+
+            card.appendChild(headDiv);
+            card.appendChild(optionsDiv);
+            container.appendChild(card);
+        }
+    }
+
+    // 收集未答题目的序号（用于友善提示）
+    function getMissingList() {
+        const missing = [];
+        for (let i = 0; i < selectedScores.length; i++) {
+            if (selectedScores[i] === null) {
+                missing.push(i + 1);
+            }
+        }
+        return missing;
+    }
+
+    // 显示未选提醒
+    function showMissingAlert(missingNumbers) {
+        const oldWarn = document.querySelector('.warning-missing');
+        if (oldWarn) oldWarn.remove();
+
+        const warningDiv = document.createElement('div');
+        warningDiv.className = 'warning-missing';
+        if (missingNumbers.length === 1) {
+            warningDiv.innerHTML = `🐣 粉嫩小提醒～ 第 ${missingNumbers[0]} 题忘记选啦！戳戳小圆点再继续吧 🐣`;
+        } else {
+            warningDiv.innerHTML = `🌸 软萌提示：第 ${missingNumbers.join('、')} 题还没选中哟！选完就能查看快乐状态啦 🌸`;
+        }
+        const questionsPanel = document.getElementById('questionsContainer');
+        const actionDiv = document.querySelector('.action-cute');
+        if (questionsPanel && actionDiv) {
+            questionsPanel.parentNode.insertBefore(warningDiv, actionDiv);
+        }
+        warningDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => {
+            if (warningDiv && warningDiv.parentNode) warningDiv.remove();
+        }, 3800);
+    }
+
+    // 根据总分映射等级（不对外暴露分数）
+    function getResultByTotalScore(totalScore) {
+        if (totalScore <= 15) {
+            return {
+                emoji: '🦄🎀',
+                level: '人间清醒·职场锦鲤',
+                moodBar: '💖💖💖💖💖',
+                actionMsg: '状态超棒！你和工作的关系健康又甜蜜～ 继续保持你的可爱节奏，你已经是办公室正能量小太阳啦 ✨ 偶尔也要请摸鱼之神保佑同事噢！'
+            };
+        } else if (totalScore <= 30) {
+            return {
+                emoji: '🐿️🍰',
+                level: '普通打工人·微累体质',
+                moodBar: '💖💖💖🧸',
+                actionMsg: '属于正常压力波动范围～ 身体悄悄打了个小呵欠。建议：周末彻底断联一个下午，撸猫/追番/画图，找个让心融化的小爱好。和饭搭子交换快乐碎片会更开心哟！'
+            };
+        } else if (totalScore <= 45) {
+            return {
+                emoji: '🐢💗',
+                level: '负重前行·壳裂预警',
+                moodBar: '💖💛',
+                actionMsg: '焦虑感已经来敲门啦～ 记得减少完美主义，说出自己的难处不可怕。试着约好朋友喝杯奶茶散散步，或者找专业心理咨询师聊聊天都是勇敢的选择。你已经很棒了！'
+            };
+        } else {
+            return {
+                emoji: '🐙🚨',
+                level: '章鱼保罗·高压警报',
+                moodBar: '🔴🔴🤍',
+                actionMsg: '你的情绪负重已经到警戒线了！拜托请立刻照顾自己：申请调休，允许自己发呆，约信赖的人谈谈。如果持续难受，一定要去心理门诊或拨打心理援助热线。你比所有KPI加起来都珍贵，工作不值得你透支健康。'
+            };
+        }
+    }
+
+    // 显示结果，不展示任何具体得分数字
+    function displayResults() {
+        const missing = getMissingList();
+        if (missing.length > 0) {
+            showMissingAlert(missing);
+            return;
+        }
+
+        let totalScore = 0;
+        for (let i = 0; i < selectedScores.length; i++) {
+            totalScore += selectedScores[i];
+        }
+
+        const resultData = getResultByTotalScore(totalScore);
+        const resultHTML = `
+            <div class="result-area" id="cuteResultCard">
+                <div class="result-emoji">${resultData.emoji}</div>
+                <div class="result-title">${resultData.level}</div>
+                <div class="result-mood">${resultData.moodBar}</div>
+                <div class="advice-cute">
+                    💌 <strong>给你的专属小纸条</strong><br>
+                    ${resultData.actionMsg}<br><br>
+                    🧸 你的感受永远比任何KPI都重要，要好好爱自己哟。
+                </div>
+                <button class="reset-btn" id="softResetBtn">🔄 再测一次 / 选项重新摇摇乐 🔄</button>
+            </div>
+        `;
+
+        const resultContainer = document.getElementById('resultBlock');
+        resultContainer.innerHTML = resultHTML;
+
+        // 隐藏题目区+提交按钮
+        const questionsDiv = document.getElementById('questionsContainer');
+        const submitDiv = document.querySelector('.action-cute');
+        if (questionsDiv) questionsDiv.style.display = 'none';
+        if (submitDiv) submitDiv.style.display = 'none';
+
+        const resetButton = document.getElementById('softResetBtn');
+        if (resetButton) {
+            resetButton.addEventListener('click', () => {
+                resetFullTest();
+            });
+        }
+    }
+
+    // 完全重置：重新随机排序所有选项，清空选中，显示题目区
+    function resetFullTest() {
+        // 重新生成随机选项顺序
+        randomizedQuestions = buildRandomizedQuestions();
+        selectedScores = new Array(randomizedQuestions.length).fill(null);
+        selectedOptionIndices = new Array(randomizedQuestions.length).fill(-1);
+
+        const questionsDiv = document.getElementById('questionsContainer');
+        const submitDiv = document.querySelector('.action-cute');
+        if (questionsDiv) questionsDiv.style.display = 'block';
+        if (submitDiv) submitDiv.style.display = 'block';
+
+        const resultContainer = document.getElementById('resultBlock');
+        if (resultContainer) resultContainer.innerHTML = '';
+
+        const oldWarn = document.querySelector('.warning-missing');
+        if (oldWarn) oldWarn.remove();
+
+        renderQuestions();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 绑定提交事件
+    function bindSubmit() {
+        const btn = document.getElementById('cuteSubmitBtn');
+        if (btn) {
+            // 避免重复绑定
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', displayResults);
+        }
+    }
+
+    // 初始化运行
+    function init() {
+        initData();      // 随机顺序 + 重置选择
+        renderQuestions();
+        bindSubmit();
+    }
+
+    init();
+</script>
+</body>
+</html>
